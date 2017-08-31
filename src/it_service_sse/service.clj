@@ -51,17 +51,15 @@
   [request]
   (ring-resp/response "Hello World!"))
 
-(defn trace [ctx]
+(defn on-disconnect [ctx]
   (let [uid (get-in ctx [:request :path-params :uid])]
-    (dec-counter uid)
-    (async/close! (get ctx :response-channel))))
-
+    (dec-counter uid)))
 
 (def common-interceptors [(body-params/body-params) http/html-body])
 
 (def routes #{["/" :get (conj common-interceptors `home-page)]
               ["/users/list" :get (conj common-interceptors users-page)]
-              ["/channel/:uid" :get [(sse/start-event-stream stream-ready 10 10 {:on-client-disconnect trace})]
+              ["/channel/:uid" :get [(sse/start-event-stream stream-ready 10 10 {:on-client-disconnect on-disconnect})]
                :route-name :sse]})
 
 ;; Consumed by it-service-sse.server/create-server

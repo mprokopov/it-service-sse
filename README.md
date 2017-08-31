@@ -1,16 +1,11 @@
 # it-service-sse
 
-FIXME
+This microservice is a part of the IT-Service Adminka
+listens broadcasted pmessage from Redis and streams as SSE channel
 
 ## Getting Started
 
-1. Start the application: `lein run`
-2. Go to [localhost:8080](http://localhost:8080/) to see: `Hello World!`
-3. Read your app's source code at src/it_service_sse/service.clj. Explore the docs of functions
-   that define routes and responses.
-4. Run your app's tests with `lein test`. Read the tests at test/it_service_sse/service_test.clj.
-5. Learn more! See the [Links section below](#links).
-
+1. Start the application: `lein run-dev` for dev mode
 
 ## Configuration
 
@@ -29,7 +24,7 @@ To learn more about configuring Logback, read its [documentation](http://logback
 
 1. Build an uberjar of your service: `lein uberjar`
 2. Build a Docker image: `sudo docker build -t it-service-sse .`
-3. Run your Docker image: `docker run -p 8080:8080 it-service-sse`
+3. Run your Docker image: `docker run -p 9292:9292 -e REDIS_HOST=redis --link itservice_redis_1 it-service-sse`
 
 ### [OSv](http://osv.io/) unikernel support with [Capstan](http://osv.io/capstan/)
 

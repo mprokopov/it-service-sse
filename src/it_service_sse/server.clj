@@ -4,10 +4,11 @@
             [io.pedestal.http.route :as route]
             [clojure.core.async :as async]
             [taoensso.carmine :as car :refer [wcar]]
+            [environ.core :refer [env]]
             [it-service-sse.service :as service]))
 
 ;; This is an adapted service map, that can be started and stopped
-;; From the REPL you can call server/start and server/stop on this service
+                                        ;close; From the REPL you can call server/start and server/stoo on this service
 (defonce runnable-service (server/create-server service/service))
 
 (defn run-dev
@@ -29,7 +30,7 @@
       server/create-server
       server/start))
 
-(def server1-conn {:pool {} :spec {}})
+(def server1-conn {:pool {} :spec {:host (or (:redis-host env) "localhost")}})
 
 (defn start-redis
   "returns redis instance"
