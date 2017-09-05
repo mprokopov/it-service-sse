@@ -48,6 +48,8 @@ jar:
 build-master:
   stage: build
   image: docker:latest
+  services:
+    - docker:dind
   environment:
     name: docker
   script:
