@@ -33,23 +33,25 @@ jar:
     - target/it-service-sse-0.0.1-SNAPSHOT-standalone.jar
     expire_in: 1 week
 
-docker:
-  image: docker:latest
+#docker:
+#  image: docker:latest
   #- docker:dind
-  script:
-  - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
-  - wget https://gitlab.it-expert.com.ua/nexus/it-service-sse/-/jobs/109/artifacts/raw/target/it-service-sse-0.0.1-SNAPSHOT-standalone.jar target/it-service-sse-0.0.1-SNAPSHOT-standalone.jar
-  - docker build --pull -t "$CI_REGISTRY_IMAGE" .
-  - docker push "$CI_REGISTRY_IMAGE"
-  only:
-    - master
+#  script:
+#  - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+#  - wget https://gitlab.it-expert.com.ua/nexus/it-service-sse/-/jobs/109/artifacts/raw/target/it-service-sse-0.0.1-SNAPSHOT-standalone.jar target/it-service-sse-0.0.1-SNAPSHOT-standalone.jar
+#  - docker build --pull -t "$CI_REGISTRY_IMAGE" .
+#  - docker push "$CI_REGISTRY_IMAGE"
+#  only:
+#    - master
   
 
 build-master:
   stage: build
+  image: docker:latest
   environment:
     name: docker
   script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
     - wget https://gitlab.it-expert.com.ua/nexus/it-service-sse/-/jobs/109/artifacts/raw/target/it-service-sse-0.0.1-SNAPSHOT-standalone.jar target/it-service-sse-0.0.1-SNAPSHOT-standalone.jar
     - docker build --pull -t "$CI_REGISTRY_IMAGE" .
     - docker push "$CI_REGISTRY_IMAGE"
