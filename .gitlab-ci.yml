@@ -1,22 +1,6 @@
-# This file is a template, and might need editing before it works on your project.
-# Based on openjdk:8, already includes lein
-# If you need to configure a database, add a `services` section here
-# See https://docs.gitlab.com/ce/ci/services/postgres.html
-# Make sure you configure the connection as well
-
-#before_script:
-  # If you need to install any external applications, like a 
-  # postgres client, you may want to uncomment the line below:
-  # 
-  #- apt-get update -y
-  #
-  # Retrieve project dependencies
-  # Do this on before_script since it'll be shared between both test and
-  # any production sections a user adds
-  #- lein deps
 stages:
-  - jar
-  - docker
+  - build-jar
+  - build-docker
 #test:
 #  script:
   # If you need to run any migrations or configure the database, this 
@@ -26,47 +10,25 @@ cache:
   paths:
   - target
   
-jar:
+build-jar:
    image: clojure:lein-2.7.1-alpine
-   stage: jar
+   stage: build-jar
    script:
    - lein deps
    - lein uberjar
-   environment:
-     name: java
    artifacts:
     paths:
     - target/it-service-sse-0.0.1-SNAPSHOT-standalone.jar
     expire_in: 1 week
 
-#docker:
-#  image: docker:latest
-  #- docker:dind
-#  script:
-#  - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
-#  - wget https://gitlab.it-expert.com.ua/nexus/it-service-sse/-/jobs/109/artifacts/raw/target/it-service-sse-0.0.1-SNAPSHOT-standalone.jar target/it-service-sse-0.0.1-SNAPSHOT-standalone.jar
-#  - docker build --pull -t "$CI_REGISTRY_IMAGE" .
-#  - docker push "$CI_REGISTRY_IMAGE"
-#  only:
-#    - master
-
-
-
-build-master:
-  stage: docker
+build-docker:
+  stage: build-docker
   image: docker:latest
   services:
     - docker:dind
-  environment:
-    name: jar
   script:
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
-    #- mkdir target
-    #- apk update && apk add ca-certificates openssl && update-ca-certificates
-    #- wget https://gitlab.it-expert.com.ua/nexus/it-service-sse/-/jobs/109/artifacts/raw/target/it-service-sse-0.0.1-SNAPSHOT-standalone.jar -O target/it-service-sse-0.0.1-SNAPSHOT-standalone.jar
     - docker build --pull -t "$CI_REGISTRY_IMAGE" .
     - docker push "$CI_REGISTRY_IMAGE"
 #    - docker build --pull -t "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG" .
 #    - docker push "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG"
-  only:
-    - master
