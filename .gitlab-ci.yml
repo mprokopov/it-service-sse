@@ -16,8 +16,15 @@ before_script:
   # any production sections a user adds
   - lein deps
 
-test:
-  script:
+#test:
+#  script:
   # If you need to run any migrations or configure the database, this 
   # would be the point to do it.  
-  - lein test
+#  - lein test
+  
+jar:
+   script: lein uberjar
+   artifacts:
+    paths:
+    - target/it-service-sse-0.0.1-SNAPSHOT-standalone.jar
+    expire_in: 1 week
