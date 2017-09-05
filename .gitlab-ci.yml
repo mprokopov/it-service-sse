@@ -55,7 +55,7 @@ build-master:
   script:
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
     - mkdir target
-    - apk update && apk add ca-certificates && update-ca-certificates
+    - apk update && apk add ca-certificates openssl && update-ca-certificates
     - wget https://gitlab.it-expert.com.ua/nexus/it-service-sse/-/jobs/109/artifacts/raw/target/it-service-sse-0.0.1-SNAPSHOT-standalone.jar -O target/it-service-sse-0.0.1-SNAPSHOT-standalone.jar
     - docker build --pull -t "$CI_REGISTRY_IMAGE" .
     - docker push "$CI_REGISTRY_IMAGE"
