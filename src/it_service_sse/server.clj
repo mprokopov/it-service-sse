@@ -5,6 +5,7 @@
             [clojure.core.async :as async]
             [taoensso.carmine :as car :refer [wcar]]
             [environ.core :refer [env]]
+            [io.pedestal.log :as log]
             [it-service-sse.service :as service]))
 
 ;; This is an adapted service map, that can be started and stopped
@@ -38,10 +39,14 @@
   (car/with-new-pubsub-listener (:spec server1-conn)
     {"ticket:*:all"
      (fn [msg]
-       (async/>!! service/chan msg))
+       (do
+         (log/info :msg msg)
+         (async/>!! service/chan msg)))
      "*:user-*"
      (fn [msg]
-       (async/>!! service/chan msg))}
+       (do
+         (log/info :msg msg)
+         (async/>!! service/chan msg)))}
     (car/psubscribe "ticket:*:all")
     (car/psubscribe "*:user-*")))
 

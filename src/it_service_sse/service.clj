@@ -30,9 +30,9 @@
     (log/info :msg (str "connected user uid: " uid))
     (inc-counter uid)
     (async/go-loop []
-      (let [msg (async/<!! new-chan)
+      (let [msg (async/<! new-chan)
             [event channel pattern message] msg]
-        (log/info :msg msg)
+        (log/info :msg msg :uid uid :uid-pattern uid-pattern)
         (when (re-matches uid-pattern pattern)
           (async/>!! event-chan {:name pattern :data message}))
         (when (= "ticket:*:all" channel)
