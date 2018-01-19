@@ -18,6 +18,11 @@ build-jar:
    - boot build
    #- lein deps
    #- lein uberjar
+   cache:
+     paths:
+       - ~/.m2
+       - ~/.boot/cache/lib
+       - ~/.boot/cache/bin
    artifacts:
     paths:
     - target/it-service-sse-1.2.0.jar
