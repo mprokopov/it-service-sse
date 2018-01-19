@@ -1,7 +1,9 @@
 FROM java:8-alpine
 MAINTAINER Maksym Prokopov <mprokopov@gmail.com>
 
-ADD target/it-service-sse-0.0.1-SNAPSHOT-standalone.jar /it-service-sse/app.jar
+#ADD target/it-service-sse-0.0.1-SNAPSHOT-standalone.jar /it-service-sse/app.jar
+ENV APP it-service-sse-1.2.0.jar
+ADD target/$APP /it-service-sse/app.jar
 
 EXPOSE 9292
 

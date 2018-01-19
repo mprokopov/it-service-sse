@@ -11,14 +11,16 @@ cache:
   - target
   
 build-jar:
-   image: clojure:lein-2.7.1-alpine
+   image: clojure:boot-2.7.1-alpine
+   #image: clojure:lein-2.7.1-alpine
    stage: build-jar
    script:
-   - lein deps
-   - lein uberjar
+   - boot build
+   #- lein deps
+   #- lein uberjar
    artifacts:
     paths:
-    - target/it-service-sse-0.0.1-SNAPSHOT-standalone.jar
+    - target/it-service-sse-1.2.0.jar
     expire_in: 1 week
 
 build-docker:
