@@ -1,7 +1,7 @@
 # it-service-sse
 
-This microservice is a part of the IT-Service Adminka to deliver ticket and other notifications for 
-the javascript fronted via Server Sent Events technology. User connects with his own ID and listens only for 
+This microservice is a part of the IT-Premium IT service management system to deliver ticket processing and other notifications for 
+the javascript frontend via Server Sent Events technology. User connects with his own ID and listens only for 
 those messages, which are only for his eyes. Service also counts number of concurrent user connections.
 
 ## Configuration
