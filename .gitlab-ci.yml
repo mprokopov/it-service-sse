@@ -19,6 +19,7 @@ build-jar:
    #- lein deps
    #- lein uberjar
    cache:
+     key: project-{{checksum "boot.properties" }}-{{ checksum "build.boot" }}
      paths:
        - ~/.m2
        - ~/.boot/cache/lib
