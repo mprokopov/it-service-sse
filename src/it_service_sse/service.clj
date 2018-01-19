@@ -16,7 +16,6 @@
 (def chan-m (async/mult chan))
 
 (defn inc-counter [uid]
-  (log/counter :users -1)
   (swap! users update-in [:counters uid]
          (fn [item]
            (if item (inc item) 1))))
@@ -29,7 +28,6 @@
         uid (get-in context [:request :path-params :uid])
         uid-pattern (re-pattern (str ".*:user-" uid))]
     (log/info :msg (str "connected user uid: " uid))
-    (log/counter :users 1)
     (inc-counter uid)
     (async/go-loop []
       (let [msg (async/<! new-chan)
