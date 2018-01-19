@@ -37,7 +37,12 @@
   "returns redis instance"
   []
   (car/with-new-pubsub-listener (:spec server1-conn)
-    {"ticket:*:all"
+    {"*:agents:*"
+     (fn [msg]
+       (do
+         (log/info :msg msg)
+         (async/>!! service/chan msg)))
+     "ticket:*:all"
      (fn [msg]
        (do
          (log/info :msg msg)
@@ -48,6 +53,7 @@
          (log/info :msg msg)
          (async/>!! service/chan msg)))}
     (car/psubscribe "ticket:*:all")
+    (car/psubscribe "*:agents:*")
     (car/psubscribe "*:user-*")))
 
 (defn stop-redis [redis]
