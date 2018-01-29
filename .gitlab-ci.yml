@@ -25,10 +25,13 @@ build-jar:
        - ~/.boot/cache/lib
        - ~/.boot/cache/bin
    artifacts:
-    paths:
-      - target
+     paths:
+       - target
     #- target/it-service-sse-1.2.0.jar
-    expire_in: 1 week
+     expire_in: 1 week
+   environment:
+     BOOT_JVM_OPTIONS: "-Xms512m -Xmx1024m"
+     BOOT_WATCHERS_DISABLE: "yes"
 
 build-docker:
   stage: build-docker
