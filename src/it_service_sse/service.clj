@@ -80,7 +80,7 @@
               ;;
               ;; "http://localhost:8080"
               ;;
-              ::http/allowed-origins ["http://localhost:3000" "https://beta.it-premium.com.ua" "http://stage.it-premium.com.ua" "http://stage.it-premium.local"]
+              ::http/allowed-origins {:creds true :allowed-origins (constantly true)}
 
               ;; Root for resource interceptor that is available by default.
               ::http/resource-path "/public"
