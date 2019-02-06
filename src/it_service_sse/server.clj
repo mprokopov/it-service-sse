@@ -31,7 +31,11 @@
       server/create-server
       server/start))
 
-(def server1-conn {:pool {} :spec {:host (or (:redis-url env) "localhost")}})
+(defn redis-uri []
+  (if-let [uri (:redis-url env)]
+    {:uri uri} { :host "localhost"}))
+
+(def server1-conn {:pool {} :spec (redis-uri)})
 
 (defn start-redis
   "returns redis instance"
