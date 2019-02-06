@@ -1,4 +1,4 @@
-(defproject it-service-sse "0.0.1-SNAPSHOT"
+(defproject it-service-sse "1.3.0-beta1"
   :description "FIXME: write description"
   :url "http://example.com/FIXME"
   :license {:name "Eclipse Public License"
