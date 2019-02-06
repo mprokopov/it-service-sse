@@ -3,7 +3,7 @@
   :url "http://example.com/FIXME"
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
-  :dependencies [[org.clojure/clojure "1.8.0"]
+  :dependencies [[org.clojure/clojure "1.10.0"]
                  [io.pedestal/pedestal.service "0.5.2"]
 
                  ;; Remove this line and uncomment one of the next lines to
@@ -16,7 +16,7 @@
                  [org.slf4j/jul-to-slf4j "1.7.22"]
                  [org.slf4j/jcl-over-slf4j "1.7.22"]
                  [org.slf4j/log4j-over-slf4j "1.7.22"]
-                 [org.clojure/core.async "0.3.443"]
+                 [org.clojure/core.async "0.4.490"]
                  [com.taoensso/carmine "2.16.0"]
                  [environ "1.1.0"]]
                  ;; [celtuce "0.1.1-SNAPSHOT"]]
