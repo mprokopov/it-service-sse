@@ -1,3 +1,7 @@
+def repo = "663084659937.dkr.ecr.eu-central-1.amazonaws.com/it-service-sse"
+def tag = "latest"
+def image = "${repo}:${tag}"
+
 pipeline {
     agent any
 
@@ -7,16 +11,17 @@ pipeline {
                 sh '/var/lib/jenkins/lein uberjar'
             }
         }
-        stage('Build docker') {
-            steps {
-                script {
-                    withDockerRegistry(credentialsId: 'a85c1d64-dcc5-4253-9092-c11eb058aa45', url: 'https://registry.it-expert.com.ua') {
-                        VERSION = readFile('VERSION')
-                        def customImage = docker.build("registry.it-expert.com.ua/nexus/it-service-sse:${VERSION}")
-                        customImage.push()
-                    }
-                }
-            }
+    stage('Build docker') {
+      steps {
+        script {
+          tag = readFile('VERSION').trim() + "." + env.BUILD_NUMBER
+          image = "${repo}:${tag}"
+
+          docker.withRegistry("https://663084659937.dkr.ecr.eu-central-1.amazonaws.com", "ecr:eu-central-1:jenkins-aws-ecr") {
+            docker.build(image).push()
+          }
         }
+      }
     }
+  }
 }
