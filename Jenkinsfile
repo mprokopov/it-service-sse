@@ -22,6 +22,16 @@ pipeline {
           }
         }
       }
+      post {
+        success {
+          script {
+            writeFile(file: 'version.txt', text: tag)
+            writeFile(file: 'image.txt', text: image)
+            archiveArtifacts('version.txt')
+            archiveArtifacts('image.txt')
+          }
+        }
+      }
     }
   }
 }
