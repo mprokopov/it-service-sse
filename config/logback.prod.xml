@@ -2,26 +2,7 @@
 <!-- Scanning is currently turned on; This will impact performance! -->
 <configuration scan="false" scanPeriod="10 seconds">
   <!-- Silence Logback's own status messages about config parsing -->
-  <statusListener class="ch.qos.logback.core.status.OnConsoleStatusListener" />
-  <!-- Simple file output -->
-  <appender name="FILE"
-  class="ch.qos.logback.core.rolling.RollingFileAppender">
-    <!-- encoder defaults to ch.qos.logback.classic.encoder.PatternLayoutEncoder -->
-    <encoder>
-      <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} -
-      %msg%n</pattern>
-    </encoder>
-    <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-
-      <!-- rollover daily -->
-      <fileNamePattern>
-      logs/it-service-sse-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
-      <!-- or whenever the file size reaches 64 MB -->
-      <maxFileSize>64 MB</maxFileSize>
-    </rollingPolicy>
-    <!-- Safely log to the same file from multiple JVMs. Degrades performance! -->
-    <prudent>false</prudent>
-  </appender>
+  <statusListener class="ch.qos.logback.core.status.NopStatusListener" />
   <!-- Console output -->
   <appender name="STDOUT"
   class="ch.qos.logback.core.ConsoleAppender">
@@ -37,7 +18,6 @@
   <!-- Enable FILE and STDOUT appenders for all log messages.
        By default, only log at level INFO and above. -->
   <root level="INFO">
-    <appender-ref ref="FILE" />
     <appender-ref ref="STDOUT" />
   </root>
   <!-- For loggers in the these namespaces, log at all levels. -->
